@@ -1,0 +1,21 @@
+import io from 'socket.io-client';
+import { listenForNotifications, disconnectWebSocket } from './services/websocket';
+
+
+// Base URL of your backend
+const API_BASE_URL = 'http://localhost:3000'; // Adjust the port and address as needed
+
+// Create a WebSocket connection
+const socket = io(API_BASE_URL);
+
+// Function to listen for notifications
+export const listenForNotifications = (callback) => {
+  socket.on('batchComplete', (data) => {
+    callback(data.message);
+  });
+};
+
+// Function to disconnect the WebSocket connection
+export const disconnectWebSocket = () => {
+  socket.disconnect();
+};
